@@ -16,11 +16,8 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   }
 
   char *content = (char *)malloc(sizeof(char)*1024);
-  //printf("lol\n");
   while(fscanf(fp, "%s", content) != EOF)
     fclose(fp);
- // printf("%s\n", content);
-  //char *authraw = "YCPAdmin:changeme7";
   char *auth;
   if(iid == 0)
     auth = (char *) "WUNQQWRtaW46Y2hhbmdlbWU3";
@@ -33,9 +30,6 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   else if(iid == 4)
     auth = (char *) "YXJkbm8tNzpBRE5PLXRlc3Q=";
    
-  /*int portno = 80;
-  char *host = "10.64.128.73";
-  char *meathod = "POST";*/
   char *contentType = (char *) "Content-Type: application/json";
   struct hostent *server;
   struct sockaddr_in serv_addr;
@@ -86,10 +80,10 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   serv_addr.sin_port = htons(portno);
   memcpy(&serv_addr.sin_addr.s_addr,server->h_addr,server->h_length);
   /* connect the socket */
-  //printf("1. here\n");
+  /*** COMMON FAULT POINT HERE ***/
+  printf("Connecting to %s\n", host);
   if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
     error("ERROR connecting");
-  //printf("2. here\n");
   /* send the request */
   total = strlen(message);
   sent = 0;
