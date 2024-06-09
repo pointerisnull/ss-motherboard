@@ -4,22 +4,23 @@
 #include "lot.h"
 
 int main() {
-  Engine engine((char *) "Space Spotter 2024");
-  NetworkModule net((char *)"bhaney.net"/*"10.64.128.73"*/, (char *)"POST", 80);
-  net.print();
-
+  Engine engine;
+  engine.debug_print();
+  
   Lot lot(0, 10);
+  lot.debug_randomize(30);
+  lot.print();
 
-  engine.make_initial_packet((char *)"spacespotter/init.JSON", 0, lot);
-  std::cout << "sending packet now" << std::endl;
-  net.send_packet((char *) "spacespotter/init.JSON", (char *) "spacespotter", 0);
+  engine.make_initial_packet(engine.init_path, 0, lot);
+  engine.ping_update(engine.init_path);
 
   while(engine.is_running) {
-  //std::cout << engine.get_tick() << std::endl;
-  //engine.update_window();
   engine.check_events();
-    if (engine.should_ping())
-      engine.ping_updates();
+    if (engine.should_ping()) { //testing
+      lot.debug_randomize(30);
+      engine.make_update_packet(engine.update_path, 0, 0, lot.get_space(5));
+      engine.ping_update(engine.update_path);
+    }
     engine.tick();
   }
 

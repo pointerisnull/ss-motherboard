@@ -7,6 +7,13 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 #include "net.h"
+//using namespace netmod;
+void NetworkModule::init(char *host, char *meathod, int portno) {
+  strncpy(this->host, host, (int)sizeof(this->host));
+  strncpy(this->meathod, meathod, (int)sizeof(this->meathod));
+  this->portno = portno;
+
+}
 
 void NetworkModule::send_packet(char *file, char *path, int iid) {
   
@@ -82,8 +89,10 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   /* connect the socket */
   /*** COMMON FAULT POINT HERE ***/
   printf("Connecting to %s\n", host);
-  if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
-    error("ERROR connecting");
+  if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) {
+    error("Could not connect to host!");
+    return;
+  }
   /* send the request */
   total = strlen(message);
   sent = 0;
@@ -121,8 +130,9 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
 }
 
 void NetworkModule::error(const char *msg) {
-  perror(msg); 
-  exit(0);
+  //perror(msg); 
+  //exit(0);
+  printf("%s\n", msg);
 }
 
 void NetworkModule::print() {

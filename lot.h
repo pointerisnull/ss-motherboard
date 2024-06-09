@@ -9,15 +9,16 @@ public:
   
   int id;
   bool is_occ;
-  uint64_t time_taken;
+  uint64_t timestamp;
   uint16_t popularity;
 
   void print();
+  void update();
 
   Space(int id) {
     this->id = id;
     this->is_occ = false;
-    this->time_taken = 0;
+    this->timestamp = 0;
     this->popularity = 0;
   }
 
@@ -36,6 +37,7 @@ public:
   int space_count();
   void add(Space space);
   Space get_space(int i);
+  void update_space(int i);
   
   void debug_randomize(int scount);
   void debug_clear();
