@@ -177,7 +177,7 @@ bool Engine::should_ping() {
 }
 
 void Engine::ping_update(char *packet_path) {
-  std::cout << "Ping at " << get_tick() << std::endl;
+  //std::cout << "Ping at " << get_tick() << std::endl;
   this->netmod.send_packet(packet_path, (char *) "spacespotter", 0);
 }
 

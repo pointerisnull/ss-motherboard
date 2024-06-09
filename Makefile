@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = --std=c++11 -pedantic -lncurses -ltinfo -Wall 
-SRC = main.cpp engine.cpp net.cpp lot.cpp
+SRC = main.cpp engine.cpp display.cpp net.cpp lot.cpp
 BIN = a.out
 
 all:

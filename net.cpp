@@ -19,7 +19,8 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   
   FILE *fp = fopen(file, "r");
   if(fp == NULL) {
-    printf("error reading JSON!\n");
+    error("error reading JSON!\n");
+    return;
   }
 
   char *content = (char *)malloc(sizeof(char)*1024);
@@ -74,7 +75,7 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   /* finally, the body */
   strcat(message,content);                              
   /* What are we going to send? */
-  printf("Request:\n%s\n",message);
+  /*printf("Request:\n%s\n",message);*/
   /* create the socket */
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0) error("ERROR opening socket");
@@ -88,7 +89,7 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
   memcpy(&serv_addr.sin_addr.s_addr,server->h_addr,server->h_length);
   /* connect the socket */
   /*** COMMON FAULT POINT HERE ***/
-  printf("Connecting to %s\n", host);
+  /*printf("Connecting to %s\n", host);*/
   if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) {
     error("Could not connect to host!");
     return;
@@ -123,7 +124,7 @@ void NetworkModule::send_packet(char *file, char *path, int iid) {
 
   close(sockfd);
 
-  printf("Response:\n%s\n",response);
+  /*printf("Response:\n%s\n",response);*/
 
   free(content);
   free(message);
